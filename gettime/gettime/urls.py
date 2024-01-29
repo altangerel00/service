@@ -17,9 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from serviceapp import views
+from django.urls import path, include
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('gettime/', views.get_time, name='get_time'),
     path('', views.showTime),
-    # path('info/', views.getInfo)
 ]
+
+
+
+
+    
+
