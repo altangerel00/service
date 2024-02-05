@@ -23,8 +23,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('gettime/', views.get_time, name='get_time'),
-    path('', views.showTime),
+    # path('gettime/', views.get_time, name='get_time'),
+    # path('', views.showTime),
+     path('get_data/', views.get_data, name='get_data'),
 ]
 
 

@@ -121,3 +121,27 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+import psycopg2 as ps
+
+PGdbname="aagii"
+PGuser="postgres"
+PGpassword="1000"
+PGport="5432"
+PGhost="localhost"
+
+def connectDB():
+    con = ps.connect(
+        
+        dbname=PGdbname,
+        user=PGuser,
+        host=PGhost,
+        password= PGpassword,
+        port= PGport,
+    )
+    return con 
+def disconnectDB(con):
+    if(con):
+        con.close()
+
+            
+
