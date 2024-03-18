@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+from datetime import datetime
+import json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -121,9 +122,34 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-import psycopg2 as ps
 
-PGdbname="aagii"
+def sendResponse(request, resultCode, data, action="no action"):
+    response = {}
+    response["resultCode"] = resultCode
+    response["resultMassage"]= resultMessages[resultCode]
+    response["data"] = data 
+    response["size"] = len(data)
+    response["action"] = action
+    response["curdate"] = datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    return json.dumps(response, indent=4, sort_keys=True, default=str)
+
+resultMessages = {
+    
+    200:"amjilttai",
+    404: "oldsongui",
+    1000:"burtgeh bolomjgui. mail hgayg umni ni burtgegdsen baina",
+    1001:"hereglegch amjilttaiu burtgegdlee",
+    1002:"batalgaajuulah mail ilgeelee",
+    3002:"method error",
+    3003:"json aldaa",
+    3004:"action buruu",
+    3005:"",
+}
+    
+import psycopg2 as ps
+import random, string
+
+PGdbname="user"
 PGuser="postgres"
 PGpassword="1000"
 PGport="5432"
@@ -131,7 +157,7 @@ PGhost="localhost"
 
 def connectDB():
     con = ps.connect(
-        
+        # host = '192.168.0.15'
         dbname=PGdbname,
         user=PGuser,
         host=PGhost,
@@ -142,6 +168,9 @@ def connectDB():
 def disconnectDB(con):
     if(con):
         con.close()
-
+def randomstr(lenght):
+    character = string.ascii_lowercase + string.digits
+    password = ''.join(random.choice(character) for i in range(lenght))
+    return password
             
 
